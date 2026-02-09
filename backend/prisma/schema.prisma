@@ -1,16 +1,145 @@
-// This is your Prisma schema file,
+// This is your Prisma schema file
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Looking for ways to speed up your queries or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-// press shft H to show .env
+// ====================
+//  PROJECTS
+// ====================
+
+model Project {
+  id                Int      @id @default(autoincrement())
+  project_img       String
+  project_type      String
+  title             String
+  short_description String
+  description       String
+  purposes          String
+  usedtech          String
+  live_url          String
+  github_link       String
+  target_audience   String
+  featured          String
+  created_at        DateTime @default(now())
+  // @@map("customers")  ← This is the ACTUAL table name in PostgreSQL
+}
+
+// ======================
+//  CERTIFICATES
+// ======================
+
+model Certificate {
+  id              Int      @id @default(autoincrement())
+  display_img     String
+  title           String
+  issued_by       String
+  received_at     String
+  certificate_img String
+  created_at      DateTime @default(now())
+}
+
+// ======================
+//  EXPERIENCES
+// ======================
+
+model Experience {
+  id               Int      @id @default(autoincrement())
+  company_name     String
+  company_logo     String
+  job_title        String
+  responsibilities String
+  start_date       String
+  end_date         String
+  created_at       DateTime @default(now())
+}
+
+// ======================
+//  EMAIL 
+//  =====================
+
+model Email {
+  id         Int      @id @default(autoincrement())
+  username   String
+  password   String
+  role       String   @default("Adminq")
+  created_at DateTime @default(now())
+}
+
+// ======================
+// GALLERY 
+// ======================
+
+model Gallery {
+  id          Int      @id @default(autoincrement())
+  img         String
+  alt         String
+  description String
+  created_at  DateTime @default(now())
+}
+
+// =======================
+// PROFILE
+// =======================
+
+model Profile {
+  id         Int      @id @default(autoincrement())
+  img        String
+  created_at DateTime @default(now())
+}
+
+// =======================
+// TECHSTACKS
+// =======================
+
+model Techstack {
+  id              Int        @id @default(autoincrement())
+  frontend_record Frontend[]
+  backend_record  Backend[]
+  database_record Database[]
+  tool_record     Tool[]
+}
+
+model Frontend {
+  id            Int       @id @default(autoincrement())
+  frontend_svg  String
+  frontend_name String
+  created_at    DateTime  @default(now())
+  frontendId    Int
+  techstack     Techstack @relation(fields: [frontendId], references: [id])
+}
+
+model Backend {
+  id           Int        @id @default(autoincrement())
+  backend_svg  String
+  backend_name String
+  created_at   DateTime   @default(now())
+  techstack    Techstack? @relation(fields: [techstackId], references: [id])
+  techstackId  Int?
+}
+
+model Database {
+  id            Int        @id @default(autoincrement())
+  database_svg  String
+  database_name String
+  created_at    DateTime   @default(now())
+  techstack     Techstack? @relation(fields: [techstackId], references: [id])
+  techstackId   Int?
+}
+
+model Tool {
+  id          Int        @id @default(autoincrement())
+  tool_svg    String
+  tool_name   String
+  created_at  DateTime   @default(now())
+  techstack   Techstack? @relation(fields: [techstackId], references: [id])
+  techstackId Int?
+}
