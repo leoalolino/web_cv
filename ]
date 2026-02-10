@@ -1,0 +1,61 @@
+import prisma from "../db";
+
+interface Dtype {
+  data?: any;
+  model: string;
+  id?: number;
+  message: string;
+  status: string;
+}
+export const tableService = async ({ model }: Dtype) => {
+  const res = await (prisma as any)[model].findMany();
+
+  return res.count > 0
+    ? { message: "table exist", status: "success" }
+    : { message: "table does not exist", status: "failed" };
+};
+
+export const findById = async ({ model, id }: Dtype) => {
+  const res = await (prisma as any)[model].findMany({
+    where: {
+      id: id,
+    },
+  });
+
+  return res.count > 0
+    ? { message: "item exist", status: "success" }
+    : { message: "item did not found", status: "failed" };
+};
+
+export const displayService = async ({ model }: Dtype) => {
+  const result = await (prisma as any)[model].findMany();
+
+  return result.count > 0
+    ? { message: "successfully fetch everything", status: "success" }
+    : { message: "table empty failed to fetch", status: "failed" };
+};
+
+export const updateService = async ({ model, data, id }: Dtype) => {
+  const result = await (prisma as any)[model].updateMany({
+    where: {
+      id: id,
+    },
+    data: data,
+  });
+
+  return result.count > 0
+    ? { message: "successfully updated", status: "success" }
+    : { message: "failed to update", status: "failed" };
+};
+
+export const deleteService = async ({ model, id }: Dtype) => {
+  const res = await (prisma as any)[model].deleteMany({
+    where: {
+      id: id,
+    },
+  });
+
+  return res.count > 0
+    ? { message: "successfully deleted", status: "failed" }
+    : { message: "failed  to delete", status: "failed" };
+};
