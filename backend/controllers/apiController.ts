@@ -6,6 +6,8 @@ interface types {
   id?: string;
   data?: string;
   new_data?: string;
+  msg?: string;
+  stats?: string;
 }
 
 // ===============
@@ -16,9 +18,9 @@ const respHandler = (res: Response, data: any) => {
   const statusCode = data.stats === "success" ? 200 : 400;
 
   return res.status(statusCode).json({
-    message: data.msg as string,
-    status: data.stats as string,
-  });
+    message: data.msg,
+    status: data.stats,
+  } as types);
 };
 
 export const getMethod = async (req: Request, res: Response) => {
@@ -33,13 +35,13 @@ export const getMethod = async (req: Request, res: Response) => {
 // POST
 // ===============
 
-export const postMethod = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const postMethod = async (req: Request, res: Response) => {
   const { model }: types = req.params;
   const { data }: types = req.body;
+
+  const resp = await api.createService({ model, data } as any);
+
+  return respHandler(res, resp);
 };
 
 // ===============

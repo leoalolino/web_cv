@@ -1,5 +1,4 @@
-import prisma from "../db";
-
+import { prisma } from "../lib/prisma";
 export interface Dtype {
   info?: any;
   model: string;
@@ -7,13 +6,6 @@ export interface Dtype {
   msg: string;
   stats: string;
 }
-// export const tableService = async ({ model }: Dtype) => {
-//   const res = await (prisma as any)[model].findMany();
-//
-//   return res.count > 0
-//     ? { msg: "table exist", stats: "success" }
-//     : { msg: "table does not exist", stats: "failed" };
-// };
 
 // --------------------
 // FIND
@@ -57,6 +49,25 @@ export const displayService = async ({ model }: Dtype) => {
   }
 };
 
+export const createService = async ({ model, info }: Dtype) => {
+  const result = await (prisma as any)[model].create({
+    data: info,
+  });
+
+  return result.length > 0
+    ? {
+        msg: "successfully created everything",
+        stats: "success",
+        data: result,
+        quantity: result.length,
+      }
+    : {
+        msg: "table empty failed to fetch",
+        stats: "failed",
+        data: [],
+        quantity: null,
+      };
+};
 // --------------------
 // UPDATE
 // --------------------
