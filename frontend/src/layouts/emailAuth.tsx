@@ -28,7 +28,7 @@ export function EmailSec() {
                 You may also contact me at this social media platforms:
               </h3>
               <div className="flex flex-col gap-4">
-                v-for="social in socials" :key="social.name" :href="social.link"
+                {/* v-for="social in socials" :key="social.name" :href="social.link" */}
                 <a className="group flex items-center text-xs font-bold uppercase tracking-widest text-black hover:text-gray-300 transition-all">
                   <span className="w-8 h-px bg-gray-200 mr-4 group-hover:w-12 group-hover:bg-black transition-all"></span>
                   {/* {{ social.name }} */}

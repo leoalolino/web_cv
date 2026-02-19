@@ -11,7 +11,11 @@ import { TechstackSec } from "./layouts/techstack.tsx";
 import { TraitSec } from "./layouts/traits.tsx";
 import { GallerySec } from "./layouts/gallerySec.tsx";
 import { EmailSec } from "./layouts/emailAuth.tsx";
+import AnimationSec from "./layouts/animation.tsx";
+import DragonCursor from "./layouts/cursor.tsx";
+import { ChatBot } from "./layouts/chatBot.tsx";
 import { FooterSec } from "./layouts/footer.tsx";
+import ClickEffect from "./layouts/click.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -30,6 +34,9 @@ createRoot(document.getElementById("root")!).render(
         <GallerySec />
         <EmailSec />
         <FooterSec />
+        {/* <AnimationSec /> */}
+        {/* <DragonCursor /> */}
+        {/* <ClickEffect /> */}
       </main>
     </div>
   </StrictMode>,

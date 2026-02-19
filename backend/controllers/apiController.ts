@@ -2,13 +2,21 @@ import { Request, Response, NextFunction } from "express";
 import * as api from "../services/apiServices";
 
 interface types {
-  model?: string;
+  table?: any;
   id?: string;
   data?: string;
-  new_data?: string;
   msg?: string;
   stats?: string;
 }
+
+// ===============
+// CAPITALIZED
+// ===============
+
+const Case = ({ table }: types) => {
+  const model = table.charAt(0).toUpperCase() + table.slice(1);
+  return model;
+};
 
 // ===============
 // GET
@@ -20,14 +28,15 @@ const respHandler = (res: Response, data: any) => {
   return res.status(statusCode).json({
     message: data.msg,
     status: data.stats,
+    data: data.data ?? [],
   } as types);
 };
 
 export const getMethod = async (req: Request, res: Response) => {
-  const { model } = req.params;
+  const { table } = req.params;
+  const model = Case({ table });
 
-  const resp = await api.displayService({ model: model as string } as any);
-
+  const resp = await api.displayService({ model } as any);
   return respHandler(res, resp);
 };
 
@@ -36,11 +45,11 @@ export const getMethod = async (req: Request, res: Response) => {
 // ===============
 
 export const postMethod = async (req: Request, res: Response) => {
-  const { model }: types = req.params;
-  const { data }: types = req.body;
+  const { table }: types = req.params;
+  const data = req.body;
+  const model = Case({ table });
 
   const resp = await api.createService({ model, data } as any);
-
   return respHandler(res, resp);
 };
 
@@ -48,26 +57,26 @@ export const postMethod = async (req: Request, res: Response) => {
 // UPDATE
 // ===============
 
-export const updateMethod = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const { model, id }: types = req.params;
-  const { new_data }: types = req.body;
+export const updateMethod = async (req: Request, res: Response) => {
+  const { table, id }: types = req.params;
+  const data = req.body;
+  const model = Case({ table });
+
+  const resp = await api.updateService({
+    model,
+    data,
+    id: parseInt(id!),
+  });
+  return respHandler(res, resp);
 };
 
 // ===============
 // DELETE
 // ===============
 
-export const deleteMethod = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const { model, id }: types = req.params;
+export const deleteMethod = async (req: Request, res: Response) => {
+  const { table, id }: types = req.params;
+  const model = Case({ table });
+  const resp = await api.deleteService({ model, id: parseInt(id!) });
+  return respHandler(res, resp);
 };
-
-//check data using id or table if this data exist
-//if data exist do the thing either executes the methods
