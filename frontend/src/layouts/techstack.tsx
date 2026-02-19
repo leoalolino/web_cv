@@ -1,4 +1,9 @@
 import { useState, useEffect } from "react";
+import { Btns } from "../components/btnModifier";
+import { Btn } from "../components/btn";
+
+import { Modal } from "../components/modal";
+import type { contents } from "../components/modal";
 
 interface TechItem {
   id: { value: number; type: string };
@@ -13,6 +18,9 @@ interface CategoryData {
 }
 
 export function TechstackSec() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [content, setContent] = useState<contents | null>(null);
+
   const [techstackData, setTechstackData] = useState<CategoryData[]>([
     { title: "Frontend", label: "Frontend Development", techstack: [] },
     { title: "Backend", label: "Backend Development", techstack: [] },
@@ -97,11 +105,6 @@ export function TechstackSec() {
     fetchTechstack();
   }, []);
 
-  // Drag options (commented out for now)
-  const dragOptions = {
-    // Add your drag options here when implementing drag and drop
-  };
-
   return (
     <section
       className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-16"
@@ -122,7 +125,7 @@ export function TechstackSec() {
 
         <div className="flex gap-6 items-center pb-1">
           <div className="flex gap-4 items-center">
-            {/* Buttons - to be implemented later */}
+            <Btn />
           </div>
         </div>
       </div>
@@ -137,18 +140,27 @@ export function TechstackSec() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Render tech items */}
-              {category.techstack.map((stack, index) => (
-                <div key={stack.id.value}>
+              {category.techstack.map((s, index) => (
+                <div key={s.id.value}>
                   <div className="drag-card group relative bg-white flex items-center p-4 rounded-sm border border-gray-100 hover:border-black transition-all duration-300 select-none">
                     <div className="absolute -top-2 -right-2 flex gap-1 z-30">
                       {/* Button controls - to be implemented later */}
+                      <Btns
+                        id={s.id.value}
+                        table="projects"
+                        className=""
+                        onTypeSelect={(type) => {
+                          setContent(type);
+                          setIsOpen(true);
+                        }}
+                      />
                     </div>
 
                     <div className="shrink-0 w-12 h-12 bg-white exclude flex items-center justify-center border border-gray-100 pointer-events-none">
-                      {stack.svg.value ? (
+                      {s.svg.value ? (
                         <img
-                          src={stack.svg.value}
-                          alt={stack.name.value}
+                          src={s.svg.value}
+                          alt={s.name.value}
                           className="w-8 h-8 object-contain"
                         />
                       ) : (
@@ -158,7 +170,7 @@ export function TechstackSec() {
 
                     <div className="ml-4 pointer-events-none">
                       <h3 className="text-sm font-bold uppercase tracking-wide">
-                        {stack.name.value}
+                        {s.name.value}
                       </h3>
                       <p className="text-[10px] text-gray-500 font-bold uppercase mt-0.5">
                         Expertise: {category.label}
@@ -201,6 +213,11 @@ export function TechstackSec() {
                 </button>
               )}
             </div>
+            <Modal
+              isOpen={isOpen}
+              typeContent={content}
+              isClose={() => setIsOpen(false)}
+            />
           </div>
         ))}
       </div>

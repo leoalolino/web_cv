@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Btns } from "../components/btnModifier";
+import { Btn } from "../components/btn";
 import { Modal } from "../components/modal";
 import type { contents } from "../components/modal";
 
@@ -97,7 +98,9 @@ export function ExperienceSec() {
             </p>
           </div>
         </div>
-        <div className="flex gap-6 items-center">{/* <Btn  /> */}</div>
+        <div className="flex gap-6 items-center">
+          <Btn />
+        </div>
       </div>
 
       <div className="space-y-6">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { contents } from "../components/modal";
 
 interface info {
-  id: string;
+  id: number;
   table: string;
   className: any;
   onTypeSelect: (type: contents) => void;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Btns } from "../components/btnModifier";
+import { Btn } from "../components/btn";
 import { Modal } from "../components/modal";
 import type { contents } from "../components/modal";
 export function CertificateSec() {
@@ -63,7 +64,7 @@ export function CertificateSec() {
           </div>
         </div>
         <div className="flex gap-6 items-center">
-          {/* <btn :items="visibleCerts" /> */}
+          <Btn />
         </div>
       </div>
 

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Btns } from "../components/btnModifier";
+import { Btn } from "../components/btn";
+
 import { Modal } from "../components/modal";
 import type { contents } from "../components/modal";
 
@@ -49,7 +51,9 @@ export function GallerySec() {
             </p>
           </div>
         </div>
-        <div className="flex gap-6 items-center pb-1">{/* <Btn /> */}</div>
+        <div className="flex gap-6 items-center pb-1">
+          <Btn />
+        </div>
       </div>
 
       {galleryItems.length === 0 ? (

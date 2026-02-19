@@ -102,11 +102,9 @@ export function ProjectSec() {
                 {projects.map((p: any) => (
                   <div
                     key={p.id.value}
-                    className="flex flex-col h-full border border-gray-100 rounded-md overflow-hidden group"
+                    className="flex flex-col h-full border border-gray-100 rounded-md overflow-hidden group relative"
                   >
-                    <div className="absolute flex flex-row z-10 ml-52 gap-3 mt-3">
-                      {/* <!-- BUTTON --> */}
-                      {/* <BtnProjects /> */}
+                    <div className="absolute flex right-2 gap-1 top-2 z-30">
                       <Btns
                         id={p.id.value}
                         table="projects"
@@ -119,11 +117,13 @@ export function ProjectSec() {
                     </div>
                     <div className="relative h-48 bg-gray-100 flex items-center justify-center overflow-hidden">
                       {p.project_img.value ? (
-                        <img
-                          src={p.project_img.value}
-                          alt={p.alt?.value || "Project image"}
-                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                        />
+                        <>
+                          <img
+                            src={p.project_img.value}
+                            alt={p.alt?.value || "Project image"}
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                          />
+                        </>
                       ) : (
                         <div className="text-gray-300">
                           <svg
