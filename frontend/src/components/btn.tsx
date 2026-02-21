@@ -1,25 +1,21 @@
-import { useState } from "react";
+export type options = "isEdit" | "isDelete";
 
-export interface Props {
+interface status {
+  activity: options | null;
+  selected: (type: options | null) => void; // allow null
   isExpanded: boolean;
-  onToggleEdit?: () => void;
-  onToggleDelete?: () => void;
-  onToggleExpand?: () => void;
+  onToggle: () => void;
 }
 
-export const Btn = ({
-  isExpanded,
-  onToggleEdit,
-  onToggleDelete,
-  onToggleExpand,
-}: Props) => {
+export const Btn = ({ selected, activity, isExpanded, onToggle }: status) => {
   return (
     <div className="flex items-center gap-1.5 p-1 bg-[#121212] border border-white/10 rounded-lg shadow-2xl">
-      {/* Admin Actions Group */}
       <div className="flex items-center gap-1">
         <button
-          onClick={onToggleEdit}
-          className="p-2 text-zinc-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all duration-200 cursor-pointer group"
+          onClick={() => {
+            selected(activity === "isEdit" ? null : "isEdit");
+          }}
+          className={`p-2 rounded-md transition-all duration-200 cursor-pointer group ${activity === "isEdit" ? "text-blue-400 bg-blue-500/10" : "text-zinc-400 hover:text-blue-400 hover:bg-blue-500/10"}`}
         >
           <svg
             className="w-4 h-4 opacity-70 group-hover:opacity-100"
@@ -31,10 +27,9 @@ export const Btn = ({
             <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
         </button>
-
         <button
-          onClick={onToggleDelete}
-          className="p-2 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all duration-200 cursor-pointer group"
+          onClick={() => selected(activity === "isDelete" ? null : "isDelete")}
+          className={`p-2 rounded-md transition-all duration-200 cursor-pointer group ${activity === "isDelete" ? "text-red-400 bg-red-500/10" : "text-zinc-400 hover:text-red-400 hover:bg-red-500/10"}`}
         >
           <svg
             className="w-4 h-4 opacity-70 group-hover:opacity-100"
@@ -51,18 +46,13 @@ export const Btn = ({
           </svg>
         </button>
       </div>
-
-      {/* Divider Line */}
       <div className="w-[1px] h-4 bg-white/10 mx-1" />
-
-      {/* View More Button */}
       <button
-        onClick={onToggleExpand}
+        onClick={() => {
+          onToggle();
+        }}
         className="flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium text-zinc-300 hover:text-white hover:bg-white/5 rounded-md transition-all cursor-pointer group"
       >
-        <span className="uppercase tracking-wider">
-          {isExpanded ? "Show Less" : "View More"}
-        </span>
         <svg
           className={`w-3.5 h-3.5 transition-transform duration-500 ease-out ${isExpanded ? "rotate-180" : ""}`}
           fill="none"
