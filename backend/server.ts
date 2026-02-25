@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { api } from "./routes/api";
+import { file } from "./routes/file";
 const app = express();
 const PORT = 3000;
 
@@ -15,6 +16,7 @@ app.use(
 
 app.use(express.json());
 app.use(api);
+app.use("/upload", file);
 
 // Test route
 app.get("/api/test", (req, res) => {

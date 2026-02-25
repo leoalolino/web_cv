@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-const BigCrumple = () => {
+type Props = {
+  devMode: boolean;
+  hasRun?: boolean;
+};
+const BigCrumple = ({ devMode }: Props) => {
   const [stage, setStage] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isReversing, setIsReversing] = useState(false);
+  const hasRun = useRef<boolean>(false);
 
   useEffect(() => {
     if (!isAnimating) return;
@@ -38,7 +43,15 @@ const BigCrumple = () => {
       setIsReversing(true);
       setIsAnimating(true);
     }
+
+    hasRun.current = true;
+    return;
   };
+
+  if (devMode && !hasRun.current) {
+    handleAction();
+    return;
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black overflow-hidden font-sans">
@@ -77,23 +90,6 @@ const BigCrumple = () => {
           backgroundImage: `repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 10px)`,
         }}
       />
-
-      <div className="relative z-50 flex flex-col items-center gap-6">
-        <button
-          onClick={handleAction}
-          className={`
-            px-12 py-6 text-2xl font-black uppercase tracking-widest border-4 transition-all duration-300
-            ${
-              stage === 0
-                ? "bg-black text-white border-black hover:bg-white hover:text-black"
-                : "bg-transparent text-white border-white hover:bg-white hover:text-black"
-            }
-            ${isAnimating ? "opacity-0 pointer-events-none" : "opacity-100"}
-          `}
-        >
-          {stage === 0 ? "CRUMPLE PAGE" : "RESTORE PAGE"}
-        </button>
-      </div>
     </div>
   );
 };

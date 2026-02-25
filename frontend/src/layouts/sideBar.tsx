@@ -1,4 +1,11 @@
-export function SidebarSec() {
+type Props = {
+  btnDev: boolean;
+  toggle: () => void;
+  darkMode: boolean;
+  click: () => void;
+};
+export function SidebarSec({ btnDev, toggle, darkMode, click }: Props) {
+  console.log(btnDev);
   return (
     <>
       <div>
@@ -92,31 +99,46 @@ export function SidebarSec() {
 
               <div className="flex flex-row justify-between gap-2">
                 {/* Dark mode toggle button - functionality commented out */}
-                <button className="relative w-full mt-4 h-10.5 cursor-pointer flex items-center justify-center bg-black text-white font-black capitalize border transition-all duration-500 rounded-lg">
-                  dev mode {/* isDefault? 'devmode' : 'minimalist' */}
+                <button
+                  onClick={() => {
+                    toggle();
+                    localStorage.setItem("devMode", String(!btnDev));
+                  }}
+                  className="relative w-full mt-4 h-10.5 cursor-pointer flex items-center justify-center bg-black text-white font-black capitalize border transition-all duration-500 rounded-lg"
+                >
+                  {btnDev ? "preview" : "showcase "}
                 </button>
-                <button className="group relative w-20 mt-4 cursor-pointer flex items-center justify-center border border-gray-200 hover:border-black transition-all duration-500 rounded-md">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5 ml-4 text-black transition-transform duration-500 rotate-0 group-hover:rotate-90"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="5" />
-                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                  </svg>
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5 exclude transition-transform duration-500 scale-100"
-                    fill="#FFFFFF"
-                    stroke="currentColor"
-                    strokeWidth="0"
-                  >
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                  </svg>
+                <button
+                  onClick={() => {
+                    click();
+                    localStorage.setItem("darkMode", String(darkMode));
+                  }}
+                  className="group relative w-20 mt-4 cursor-pointer flex items-center justify-center border border-gray-200 hover:border-black transition-all duration-500 rounded-md"
+                >
+                  {darkMode ? (
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-5 h-5 text-black transition-transform duration-500 rotate-0 group-hover:rotate-90"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="5" />
+                      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-5 h-5 exclude transition-transform duration-500 scale-100"
+                      fill="#000000"
+                      stroke="currentColor"
+                      strokeWidth="0"
+                    >
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>

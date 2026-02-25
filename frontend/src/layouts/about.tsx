@@ -75,8 +75,11 @@ export function AboutSec() {
                 <div className="h-px bg-gray-100 flex-1"></div>
               </h3>
               <div className="space-y-6">
-                {edu.map((e) => (
-                  <div className="relative pl-6 border-l-2 border-gray-100">
+                {edu.map((e, i) => (
+                  <div
+                    className="relative pl-6 border-l-2 border-gray-100"
+                    key={i}
+                  >
                     <h4 className="text-sm font-black uppercase tracking-tight text-black">
                       {e.school}
                     </h4>
@@ -97,8 +100,11 @@ export function AboutSec() {
                 <div className="h-px bg-gray-100 flex-1"></div>
               </h3>
               <div className="flex flex-wrap gap-2">
-                {interested.map((i) => (
-                  <span className="px-4 py-2 bg-white border border-gray-100 text-md font-black text-black leading-relaxed rounded-full text-[10px] uppercase transition-all duration-300">
+                {interested.map((i, n) => (
+                  <span
+                    key={n}
+                    className="px-4 py-2 bg-white border border-gray-100 text-md font-black text-black leading-relaxed rounded-full text-[10px] uppercase transition-all duration-300"
+                  >
                     <p>{i}</p>
                   </span>
                 ))}

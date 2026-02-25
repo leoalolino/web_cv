@@ -107,8 +107,11 @@ export function TraitSec() {
               </h2>
 
               <div className="flex flex-wrap gap-3">
-                {traits.map((t) => (
-                  <div className="group flex items-center px-5 py-2.5 bg-white border border-gray-100 rounded-full transition-all duration-300 cursor-default">
+                {traits.map((t, i) => (
+                  <div
+                    key={i}
+                    className="group flex items-center px-5 py-2.5 bg-white border border-gray-100 rounded-full transition-all duration-300 cursor-default"
+                  >
                     <div className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-black mr-3 transition-colors"></div>
                     <span className="text-[11px] font-black uppercase tracking-widest text-black transition-colors">
                       <p>{t}</p>

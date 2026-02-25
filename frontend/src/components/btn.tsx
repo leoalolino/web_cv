@@ -2,7 +2,7 @@ export type options = "isEdit" | "isDelete";
 
 interface status {
   activity: options | null;
-  selected: (type: options | null) => void; // allow null
+  selected: (type: options | null) => void;
   isExpanded: boolean;
   onToggle: () => void;
 }
@@ -53,6 +53,7 @@ export const Btn = ({ selected, activity, isExpanded, onToggle }: status) => {
         }}
         className="flex items-center gap-2 px-3 py-1.5 text-[11px] font-medium text-zinc-300 hover:text-white hover:bg-white/5 rounded-md transition-all cursor-pointer group"
       >
+        <h3></h3>
         <svg
           className={`w-3.5 h-3.5 transition-transform duration-500 ease-out ${isExpanded ? "rotate-180" : ""}`}
           fill="none"

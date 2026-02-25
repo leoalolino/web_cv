@@ -13,49 +13,49 @@ export function ProjectSec() {
   const [selectedId, setSelectedId] = useState<any>(null);
   const sendProject = [
     {
-      tableName: { value: "Project", type: "text" },
-      project_img: { value: "", type: "text" },
-      project_type: { value: "", type: "text" },
-      title: { value: "", type: "text" },
-      short_description: { value: "", type: "text" },
-      description: { value: "", type: "text" },
-      purposes: { value: "", type: "text" },
-      live_url: { value: "", type: "text" },
-      github_link: { value: "", type: "text" },
-      target_audience: { value: "", type: "text" },
-      featured: { value: "", type: "text" },
+      tableName: { input: "Project", type: "text" },
+      projectImg: { input: "", type: "file" },
+      projectType: { input: "", type: "text" },
+      title: { input: "", type: "text" },
+      shortDescription: { input: "", type: "text" },
+      description: { input: "", type: "text" },
+      purposes: { input: "", type: "text" },
+      liveUrl: { input: "", type: "text" },
+      githubLink: { input: "", type: "text" },
+      targetAudience: { input: "", type: "text" },
+      featured: { input: "", type: "text" },
     },
   ];
 
-  const table = sendProject[0].tableName.value;
+  const table = sendProject[0].tableName.input;
   // send the sendproject when its empty and try accesing the tableName
   // if not empty then when click add send the projects and the name of it should be the properties and render it all dynamicly
-  // with the column and value of what been fetch
+  // with the column and input of what been fetch
   const fetchProject = async () => {
     try {
       const res = await fetch("http://localhost:3000/items/project");
       const json = await res.json();
       const data =
         json?.data?.map((p: any) => ({
-          id: { value: p.id, type: "text" },
-          project_img: { value: p.img, type: "text" },
-          project_type: { value: p.project_type, type: "text" },
-          title: { value: p.title, type: "text" },
-          short_description: { value: p.description, type: "text" },
-          description: { value: p.description, type: "text" },
-          purposes: { value: p.purposes, type: "text" },
-          usedtech: Array.isArray(p.usedtech)
+          id: { input: p.id, type: "text" },
+          projectImg: { input: p.img, type: "file" },
+          projectType: { input: p.project_type, type: "text" },
+          title: { input: p.title, type: "text" },
+          shortDescription: { input: p.short_description, type: "text" },
+          description: { input: p.description, type: "text" },
+          purposes: { input: p.purposes, type: "text" },
+          usedTech: Array.isArray(p.usedTech)
             ? p.usedtech
             : p.tech
-              ? p.tech.map((t: string) => ({ value: t, type: "text" }))
-              : [{ value: "React", type: "text" }],
-          live_url: { value: p.live_url, type: "text" },
-          github_link: { value: p.github_link, type: "text" },
-          target_audience: {
-            value: p.target_audience || "Everyone",
+              ? p.tech.map((t: string) => ({ input: t, type: "text" }))
+              : [{ input: "React", type: "text" }],
+          liveUrl: { input: p.live_url, type: "text" },
+          githubLink: { input: p.github_link, type: "text" },
+          targetAudience: {
+            input: p.target_audience || "Everyone",
             type: "text",
           },
-          featured: { value: p.featured || "false", type: "text" },
+          featured: { input: p.featured || "false", type: "text" },
         })) ?? [];
       setprojects(data);
     } catch (e) {
@@ -127,26 +127,31 @@ export function ProjectSec() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((p: any) => (
                 <div
-                  key={p.id.value}
+                  key={p.id.input}
                   className="flex flex-col h-full border border-gray-100 rounded-md overflow-hidden group relative"
                 >
                   {/* only show Btns when expanded AND action is set */}
                   {action && (
                     <div className="absolute flex right-2 gap-1 top-2 z-30">
                       <Btns
-                        id={p.id.value}
+                        id={p.id.input}
                         table="projects"
                         mode={action}
-                        onTypeSelect={(type) => openModal(type)}
+                        onTypeSelect={(type) => {
+                          setContent(type);
+                          setIsOpen(true);
+                          setSelectedId(p); // p is the specific project
+                          setSelectedId(p.id.input);
+                        }}
                       />
                     </div>
                   )}
 
                   <div className="relative h-48 bg-gray-100 flex items-center justify-center overflow-hidden">
-                    {p.project_img.value ? (
+                    {p.projectImg.input ? (
                       <img
-                        src={p.project_img.value}
-                        alt={p.alt?.value || "Project image"}
+                        src={p.projectImg.input}
+                        alt={p.alt?.input || "Project image"}
                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                       />
                     ) : (
@@ -171,23 +176,23 @@ export function ProjectSec() {
                   <div className="p-6 flex flex-col flex-grow">
                     <div className="mb-4">
                       <span className="text-[11px] font-black uppercase tracking-[0.2em]">
-                        {p.project_type.value ?? "N/A"}
+                        {p.projectType.input ?? "N/A"}
                       </span>
                       <h3 className="text-2xl font-black uppercase tracking-tighter mt-1 leading-tight">
-                        {p.title.value ?? "N/A"}
+                        {p.title.input ?? "N/A"}
                       </h3>
                     </div>
                     <p className="text-[13px] text-gray-600 leading-relaxed font-medium mb-6 line-clamp-3">
-                      {p.short_description.value ?? "N/A"}
+                      {p.shortDescription.input ?? "N/A"}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-8">
-                      {p.usedtech?.length > 0 ? (
-                        p.usedtech.map((t: any, i: number) => (
+                      {p.usedTech?.length > 0 ? (
+                        p.usedTech.map((t: any, i: number) => (
                           <span
                             key={i}
                             className="bg-gray-50 border border-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded"
                           >
-                            {typeof t === "string" ? t : (t.value ?? "N/A")}
+                            {typeof t === "string" ? t : (t.input ?? "N/A")}
                           </span>
                         ))
                       ) : (
@@ -198,7 +203,7 @@ export function ProjectSec() {
                     </div>
                     <div className="mt-auto flex gap-3">
                       <a
-                        href={p.live_url.value}
+                        href={p.liveUrl.input}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 inline-flex items-center justify-center px-4 py-3 bg-black text-white text-[11px] font-black uppercase tracking-widest rounded-lg hover:bg-white border border-black hover:text-black duration-300 transition-all text-center"
@@ -206,7 +211,7 @@ export function ProjectSec() {
                         View Live
                       </a>
                       <a
-                        href={p.github_link.value}
+                        href={p.githubLink.input}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 inline-flex items-center justify-center px-4 py-3 border border-gray-100 text-black text-[11px] bg-white hover:bg-gray-300 font-black uppercase tracking-widest rounded-lg transition-all duration-300 text-center"
@@ -218,7 +223,6 @@ export function ProjectSec() {
                 </div>
               ))}
 
-              {/* ADD NEW CARD */}
               <div className="group bg-white border-2 border-dashed border-gray-100 rounded-xl overflow-hidden hover:border-black transition-all duration-500 flex flex-col h-full w-full">
                 <div className="h-48 w-full border-b-2 border-dashed border-gray-100 bg-gray-50/50 flex items-center justify-center">
                   <svg
@@ -260,9 +264,10 @@ export function ProjectSec() {
       <Modal
         isOpen={isOpen}
         typeContent={content}
-        inputs={content === "Adder" ? [sendProject] : projects}
+        inputs={content === "Adder" ? sendProject : projects}
         isClose={() => setIsOpen(false)}
         tableName={table}
+        id={selectedId}
       />
     </>
   );
