@@ -17,7 +17,7 @@ import { ChatBot } from "./layouts/chatBot.tsx";
 import { FooterSec } from "./layouts/footer.tsx";
 import ClickEffect from "./layouts/click.tsx";
 
-function App() {
+export function App() {
   const [devMode, setDevMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [include, setInclude] = useState(false);
@@ -28,7 +28,7 @@ function App() {
     if (!devMode) {
       setTimeout(() => {
         setInclude(!include);
-      }, 4500);
+      }, 5000);
     }
   }, []);
 
