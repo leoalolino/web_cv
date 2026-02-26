@@ -1,20 +1,18 @@
+interface file {
+  file: String;
+}
 export const fileControl = async (req: any, res: any) => {
-  const { table } = req.params;
-  const { fileName } = req.body;
-  console.log(fileName);
-  console.log(table);
-  if (table) return res.status(200).json({ stats: "success" });
+  try {
+    const { fileName } = req.body;
+    const { table } = req.params;
+    console.log(`found: ${fileName}`);
+    console.log(`with the table of ${table}`);
 
-  return res.status(400).json({ stats: "failed" });
-};
+    if (fileName && table)
+      return res.status(200).json({ file: fileName, table: table });
 
-export const textControl = async (req: any, res: any) => {
-  const { table } = req.params;
-  const { textName } = req.body;
-
-  console.log(textName);
-  console.log(table);
-  if (table) return res.status(200).json({ stats: "success" });
-
-  return res.status(400).json({ stats: "failed" });
+    return res.status(400).json({ message: "failed" });
+  } catch (e: any) {
+    return { message: `error due to: ${e.message}`, status: "failed" };
+  }
 };

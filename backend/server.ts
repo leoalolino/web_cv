@@ -16,7 +16,7 @@ app.use(
 
 app.use(express.json());
 app.use(api);
-app.use("/upload", file);
+app.use(file);
 
 // Test route
 app.get("/api/test", (req, res) => {
