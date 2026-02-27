@@ -5,7 +5,6 @@ type Props = {
   click: () => void;
 };
 export function SidebarSec({ btnDev, toggle, darkMode, click }: Props) {
-  console.log(btnDev);
   return (
     <>
       <div>
@@ -16,42 +15,10 @@ export function SidebarSec({ btnDev, toggle, darkMode, click }: Props) {
                 {/* Profile image - add src when available */}
                 <img
                   id="filename"
-                  src=""
                   className="size-full object-cover"
                   alt="Profile"
                 />
               </div>
-
-              {/* Edit profile icon - functionality commented out */}
-              {/* <span className="absolute translate-x-8 -translate-y-10 rounded-md hover:text-black cursor-pointer border">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    fill="none"
-                    d="M13 3c-3.855 0-7 3.145-7 7c0 2.41 1.23 4.55 3.094 5.813C5.527 17.343 3 20.883 3 25h2c0-4.43 3.57-8 8-8c2.145 0 4.063.879 5.5 2.25l-4.719 4.719l-.062.312l-.688 3.532l-.312 1.468l1.469-.312l3.53-.688l.313-.062l10.094-10.094c1.16-1.16 1.16-3.09 0-4.25a3.02 3.02 0 0 0-4.219-.031l-3.968 3.969a10.1 10.1 0 0 0-3.032-2A7.02 7.02 0 0 0 20 10c0-3.855-3.145-7-7-7m0 2c2.773 0 5 2.227 5 5s-2.227 5-5 5s-5-2.227-5-5s2.227-5 5-5m13 10c.254 0 .52.082.719.281a.977.977 0 0 1 0 1.406l-9.688 9.688l-1.781.375l.375-1.781l9.688-9.688A.93.93 0 0 1 26 15"
-                  />
-                </svg>
-              </span> */}
-
-              {/* Image upload controls - functionality commented out */}
-              {/* <div className="justify-start flex flex-row mx-8 mt-1 absolute cursor-pointer">
-                <label htmlFor="profile">
-                </label>
-                <input id="profile" type="file" name="profile" hidden />
-
-                <div>
-                  <button className="p-1 rounded-md font-bold capitalize cursor-pointer duration-300 bg-red-500 text-white hover:bg-red-400">
-                    cancel
-                  </button>
-                  <button className="p-1 rounded-md font-bold capitalize cursor-pointer duration-300 bg-green-500 text-white hover:bg-green-400">
-                    Done
-                  </button>
-                </div>
-              </div> */}
             </div>
 
             <div className="flex-col justify-start mx-5 mt-4">
